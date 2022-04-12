@@ -5,13 +5,11 @@ fun main(args: Array<String>) {
     val listOfHashes = mutableListOf<String>()
     val listOfCharacters = mutableListOf<Char>()
     var listOfDecryptedHashes = ""
-    val mail = "htas767@gmail.com"
     var counter = 0
     var word = ""
     val decrypt = Decrypt()
     val model = decrypt.parseJson()
 
-    //32 karektere ayır
     model?.hash?.forEach {
         counter++
         if (counter == 33) {
@@ -24,7 +22,6 @@ fun main(args: Array<String>) {
     }
     listOfHashes.add(word)
 
-    //ingilizce ve semboller
     for (i in 33..95) {
         if (i > 64) {
             listOfCharacters.add(i.toChar().lowercaseChar())
@@ -34,9 +31,9 @@ fun main(args: Array<String>) {
         }
     }
 
-    //hash teker teker bak
-    listOfHashes.forEach {
-        listOfDecryptedHashes += findHash(listOfCharacters, listOfDecryptedHashes, it, mail)
+    listOfHashes.forEach { hash ->
+        listOfDecryptedHashes += model?.email
+            ?.let { email -> findHash(listOfCharacters, listOfDecryptedHashes, hash, email) }
     }
 
     print(listOfDecryptedHashes)
